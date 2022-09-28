@@ -30,6 +30,9 @@ def insertPlaylist(playlistUrl:str):
         except ConstraintViolationError as e:
             print(f"Song: '{entry['SongName']}' already in db")
 
+def insertPlaylists(*playlistURLs:str):
+    for pl in playlistURLs:
+        insertPlaylist(playlistUrl=pl)
 
 def getByBpm(bpm:int)->list:
     return [object for object in SongModel.getByProperty(printStr=False,propName="bpm",propType=Type.int32,_bpm = bpm)]
@@ -108,4 +111,5 @@ if __name__ == '__main__':
       'getbybpm':getByBpmPrintFormatted,
       'getall': getAllPrintFormatted,
       'getbykey':getByKeyPrintFormatted,
+      'insertplaylists': insertPlaylists,
   })
