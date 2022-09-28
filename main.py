@@ -34,6 +34,27 @@ def insertPlaylists(*playlistURLs:str):
     for pl in playlistURLs:
         insertPlaylist(playlistUrl=pl)
 
+def getAllPlaylistsFromAUser(userId:str) -> list:
+    '''
+    Given this user link https://open.spotify.com/user/22z57fkqz6sunlhyv42yk4sba?si=e46bb621b2c5427c
+    the spotify ID comes after "/user/"
+    "22z57fkqz6sunlhyv42yk4sba" in this case
+    A full path won't work
+        
+    --> Maybe try to handle that <---
+    '''
+    if userId:
+        _playlists = spotipy_client.user_playlists(userId)
+        #playlists = [f"{num} {item['name']} {item['uri']}" for num,item in enumerate(_playlists['items'])]
+        #pp.pprint(playlists)
+        print(_playlists)
+    else:
+        raise ValueError("No spotify user id entered")
+
+def insertAllSongsFromAllPlaylistsFromAUser(userID:str):
+    #insertPlaylists(getAllPlaylistsFromAUser(userID))
+    getAllPlaylistsFromAUser(userID)
+
 def getByBpm(bpm:int)->list:
     return [object for object in SongModel.getByProperty(printStr=False,propName="bpm",propType=Type.int32,_bpm = bpm)]
 
@@ -112,4 +133,5 @@ if __name__ == '__main__':
       'getall': getAllPrintFormatted,
       'getbykey':getByKeyPrintFormatted,
       'insertplaylists': insertPlaylists,
+      'insertallsongsfromallplaylistsfromuser':insertAllSongsFromAllPlaylistsFromAUser
   })

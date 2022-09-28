@@ -96,8 +96,6 @@ def getDataFromPlaylist(client, playlistID) -> list:
 
     for obj in client.playlist(playlistID)['tracks']['items']:
         artists = obj['track']['artists']
-        # print([artist['name'] for artist in artists])
-        # break
         data.append({
             'SongName': f"{obj['track']['name']}",
             'Artists': f"{[artist['name'] for artist in artists]}",
@@ -108,5 +106,3 @@ def getDataFromPlaylist(client, playlistID) -> list:
         #return [artist['name'] for artist in artists]
     
     return data
-# generateDBFilesFromPlaylist(makeLogFile=False, logFilePath)
-# generateDBFilesFromURLList(makeLogFile=False, logFilePath)
